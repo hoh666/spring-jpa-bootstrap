@@ -82,13 +82,4 @@ public class UserController extends BaseController {
 		return null;
 	}
 
-	public Object paramArrayTest1(@ModelAttribute("bet") Bet bet) throws Exception {
-		
-		return null;
-	}
-
-	public static class Bet {
-		private String lotteryType[];
-		private String selectType[];
-	}
 }
