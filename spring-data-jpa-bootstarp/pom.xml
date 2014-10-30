@@ -161,6 +161,13 @@
 		<artifactId>jackson-mapper-asl</artifactId>
 		<version>1.9.10</version>
 	</dependency>
+	
+	<!-- Dozer bean mapper -->
+	<dependency>
+		<groupId>net.sf.dozer</groupId>
+		<artifactId>dozer</artifactId>
+		<version>5.4.0</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>spring-data-jpa-bootstarp</finalName>

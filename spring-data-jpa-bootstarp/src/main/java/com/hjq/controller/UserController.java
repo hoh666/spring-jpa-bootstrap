@@ -4,23 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hjq.entity.Profession;
 import com.hjq.entity.User;
 import com.hjq.entity.enumType.SexType;
+import com.hjq.service.ProfessionService;
 import com.hjq.service.SimpleUserService;
 
 @Controller
@@ -28,24 +36,29 @@ import com.hjq.service.SimpleUserService;
 public class UserController extends BaseController {
 	
 	@Resource private SimpleUserService simpleUserService;
+	@Inject private ProfessionService professionService;
 
-	@ResponseBody
-	@RequestMapping(value="/create", method=RequestMethod.GET)
-	public Object createBean(@Valid @ModelAttribute(value="createUserBean") User user, HttpServletRequest request, Model model) {
-		if (user == null) {
-			user = new User();
+	@RequestMapping(value="/goAdd", method=RequestMethod.GET)
+	public String goAddUser(Model model) {
+
+		model.addAttribute("professions", professionService.findAll(null, null));
+		return "user/addUser";
+	}
+
+	@RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.POST})
+	public String createBean(@Valid @ModelAttribute(value="createUserBean") UserForm userForm, BindingResult bindingResult, HttpServletRequest request, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errMsg", bindingResult.getFieldError());
+			return "/api/user/goAdd";
 		}
-		user.setUserName("joe");
-		user.setPassword("123456");
-		user.setAge(22);
-		user.setSex(SexType.MALE);
+		User user = mapping(userForm, User.class);
 		user = simpleUserService.create(user);
-		model.addAttribute("user", user);
-		return user;
+		return redirectUrl("query");
 	}
 
 	@RequestMapping(value="/query", method=RequestMethod.GET)
-	public String getUsersByQueryItems(@RequestParam("username") String username, HttpServletRequest request, Model model) {
+	public String getUsersByQueryItems(@RequestParam(value="username", required=false) String username, HttpServletRequest request, Model model) {
 		User user = new User();
 		user.setUserName(username);
 		Page<User> users = simpleUserService.findAll(user, new Sort(Direction.DESC, "userName"));
@@ -82,4 +95,80 @@ public class UserController extends BaseController {
 		return null;
 	}
 
+	public static class UserForm {
+
+		@NotBlank(message="username ")
+		private String userName;
+		@NotBlank(message="password")
+		private String password;
+		@NotNull(message="sex")
+		private SexType sex;
+
+		@NotNull(message="profession")
+		private Profession profession;
+
+		private String description;
+
+		private String[] testMultiple;
+
+		@Max(value=100, message="age < 100")
+		@Min(value=1, message="age > 0")
+		private int age;
+
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public SexType getSex() {
+			return sex;
+		}
+
+		public void setSex(SexType sex) {
+			this.sex = sex;
+		}
+
+		public Profession getProfession() {
+			return profession;
+		}
+
+		public void setProfession(Profession profession) {
+			this.profession = profession;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		public String[] getTestMultiple() {
+			return testMultiple;
+		}
+
+		public void setTestMultiple(String[] testMultiple) {
+			this.testMultiple = testMultiple;
+		}
+
+		public int getAge() {
+			return age;
+		}
+
+		public void setAge(int age) {
+			this.age = age;
+		}
+	}
 }

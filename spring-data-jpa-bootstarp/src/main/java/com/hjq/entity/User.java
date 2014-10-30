@@ -47,8 +47,11 @@ public class User implements Serializable {
 	private long version = 0;
 
 	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "profession_id")
+	@JoinColumn(name = "profession_id", nullable = false)
 	private Profession profession;
+
+	@Column(name="description")
+	private String description;
 
 	public long getId() {
 		return id;
@@ -96,6 +99,22 @@ public class User implements Serializable {
 
 	public void setVersion(long version) {
 		this.version = version;
+	}
+
+	public Profession getProfession() {
+		return profession;
+	}
+
+	public void setProfession(Profession profession) {
+		this.profession = profession;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

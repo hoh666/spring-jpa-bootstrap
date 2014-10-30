@@ -11,13 +11,15 @@
   <body>
     <div class="container">
       <h2>用户</h2>
-      <p>Using all the table classes on one table:</p>                                          
+      <p>Using all the table classes on one table: ${users.totalElements }</p>                                          
       <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
           <tr>
             <th>#</th>
             <th>用户名</th>
             <th>性别</th>
+            <th>年龄</th>
+            <th>职业</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +29,7 @@
 					<td>${content.id }</td>
 					<td>${content.userName }</td>
 					<td>${content.sex.displayName}</td>
+					<td>${content.age }</td>
 				</tr>
 			</c:forEach>
 		  </c:if>
@@ -39,6 +42,6 @@
       </table>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/jquery/jquery-1.11.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </html>

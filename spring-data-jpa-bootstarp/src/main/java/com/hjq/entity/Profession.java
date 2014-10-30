@@ -22,6 +22,15 @@ public class Profession implements Serializable {
 	@Column(name = "profession_name", nullable = false)
 	private String professionName;
 
+	public Profession(long id, String professionName) {
+		this.id = id;
+		this.professionName = professionName;
+	}
+
+	public Profession(){
+		
+	}
+
 	public long getId() {
 		return id;
 	}
