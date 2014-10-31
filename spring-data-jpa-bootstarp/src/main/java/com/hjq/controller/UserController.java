@@ -61,7 +61,7 @@ public class UserController extends BaseController {
 	public String getUsersByQueryItems(@RequestParam(value="username", required=false) String username, HttpServletRequest request, Model model) {
 		User user = new User();
 		user.setUserName(username);
-		Page<User> users = simpleUserService.findAll(user, new Sort(Direction.DESC, "userName"));
+		Page<User> users = simpleUserService.findAll(user, new Sort(Direction.DESC, "id", "userName"));
 //		long count = simpleUserService.count(user);
 		//TODO combine users and count =>Page(...)
 		model.addAttribute("users", users);

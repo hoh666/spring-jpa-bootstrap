@@ -43,3 +43,7 @@ function resetClass(){
 	$("#descriptionDiv").attr("class", "form-group");
 	$("#professionDiv").attr("class", "form-group");
 }
+
+function goBack(){
+	window.location.href="/api/user/query";
+}

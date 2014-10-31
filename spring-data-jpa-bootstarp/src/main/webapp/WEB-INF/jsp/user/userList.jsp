@@ -4,11 +4,13 @@
 <head>
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/css/body.css">
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 
   <body>
+  	<%@ include file="../include/navbar.jsp"%>
     <div class="container">
       <h2>用户</h2>
       <p>Using all the table classes on one table: ${users.totalElements }</p>                                          
@@ -30,6 +32,7 @@
 					<td>${content.userName }</td>
 					<td>${content.sex.displayName}</td>
 					<td>${content.age }</td>
+					<td>${content.profession.professionName }</td>
 				</tr>
 			</c:forEach>
 		  </c:if>

@@ -30,11 +30,11 @@
 								placeholder="请输入密码">
 						</div>
 					</div>
-					<div class="form-group" id="sexDiv">
-						<label for="inputSex" class="col-lg-4 control-label">性别</label>
+					<div class="form-group">
+						<label for="inputSex" class="col-lg-4 control-label">other</label>
 						<div class="col-lg-3">
-							<input type="checkbox" name="sex" value="MALE" checked="checked" /> 男&nbsp;
-							<input type="checkbox" name="sex" value="FEMALE" /> 女
+							<input type="checkbox" name="sex1" value="MALE" checked="checked" /> one&nbsp;
+							<input type="checkbox" name="sex1" value="FEMALE" /> two
 						</div>
 					</div>
 					<div class="form-group" id="ageDiv">
@@ -52,19 +52,17 @@
 								breaks onto a new line and may extend beyond one line.</span>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" id="sexDiv">
 						<label class="col-lg-4 control-label">Radios</label>
 						<div class="col-lg-3">
 							<div class="radio">
-								<label> <input type="radio" name="optionsRadios"
-									id="optionsRadios1" value="option1" checked=""> Option
-									one is this
+								<label> <input type="radio" name="sex"
+									id="sex" value="FELAME" checked="checked"> 女
 								</label>
 							</div>
 							<div class="radio">
-								<label> <input type="radio" name="optionsRadios"
-									id="optionsRadios2" value="option2"> Option two can be
-									something else
+								<label> <input type="radio" name="sex"
+									id="sex" value="MALE"> 男
 								</label>
 							</div>
 						</div>
@@ -100,7 +98,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-4">
-							<button type="button" class="btn btn-default">取消</button>
+							<button type="button" class="btn btn-default" onclick="goBack();">取消</button>
 							<button type="button" class="btn btn-primary" onclick="formSubmit();">提交</button>
 						</div>
 					</div>

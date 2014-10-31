@@ -2,7 +2,6 @@ package com.hjq.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -46,7 +45,7 @@ public class User implements Serializable {
 	@Version
 	private long version = 0;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "profession_id", nullable = false)
 	private Profession profession;
 
