@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	
+	<mapping>
+		<class-a>com.hjq.controller.report.ReportController.ReportForm</class-a>
+		<class-b>com.hjq.entity.FeedBackContent</class-b>
+		<field custom-converter="com.hjq.convert.dozer.ReportTypeConverter">
+			<a>reportType</a>
+			<b>reportType</b>
+			<a-hint>[Lcom.hjq.entity.enumType.ReportType;</a-hint>
+			<b-hint>java.lang.String</b-hint>
+		</field>
+		<field>
+			<a>uid</a>
+			<b>userId</b>
+		</field>
+	</mapping>
+</mappings>

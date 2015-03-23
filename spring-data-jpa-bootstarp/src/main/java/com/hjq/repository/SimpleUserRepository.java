@@ -17,5 +17,5 @@ public interface SimpleUserRepository extends JpaRepository<User, Long> {
 	@Query("select count(*) from User u where LOWER(u.userName) like %:userName%")
 	public long getUserCountByUserName(@Param("userName") String userName);
 
-	
+	public User findByUserNameAndPassword(String username, String password);
 }

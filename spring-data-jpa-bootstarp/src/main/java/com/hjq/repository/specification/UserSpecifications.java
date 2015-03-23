@@ -1,4 +1,4 @@
-package com.hjq.repository;
+package com.hjq.repository.specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

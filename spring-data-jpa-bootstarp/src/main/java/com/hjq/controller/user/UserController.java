@@ -1,4 +1,4 @@
-package com.hjq.controller;
+package com.hjq.controller.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -25,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hjq.config.CommonResponseMessage;
+import com.hjq.controller.BaseController;
+import com.hjq.entity.ApiResponseModel;
 import com.hjq.entity.Profession;
 import com.hjq.entity.User;
 import com.hjq.entity.enumType.SexType;
@@ -50,11 +54,11 @@ public class UserController extends BaseController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errMsg", bindingResult.getFieldError());
-			return "/api/user/goAdd";
+			return "forward:/api/user/goAdd";
 		}
 		User user = mapping(userForm, User.class);
 		user = simpleUserService.create(user);
-		return redirectUrl("query");
+		return redirectUrl("/api/user/query");
 	}
 
 	@RequestMapping(value="/query", method=RequestMethod.GET)
@@ -66,6 +70,17 @@ public class UserController extends BaseController {
 		//TODO combine users and count =>Page(...)
 		model.addAttribute("users", users);
 		return "user/userList";
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/userinfo", method=RequestMethod.GET)
+	public Object userinfo(HttpServletRequest request, HttpSession session) throws Exception {
+		User user = getUser(session);
+		if (user == null) {
+			return ApiResponseModel.failure(CommonResponseMessage.UNLOGIN);
+		} else {
+			return ApiResponseModel.success(user);
+		}
 	}
 
 	@ResponseBody

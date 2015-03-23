@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.hjq.entity.enumType.SexType;
 
 @Entity
@@ -32,6 +34,7 @@ public class User implements Serializable {
 	@Column(name = "username", nullable = false)
 	private String userName;
 
+	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;
 

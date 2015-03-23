@@ -34,6 +34,7 @@
     
 	<mvc:resources location="/css/" mapping="/css/**"/>
 	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/fonts/" mapping="/fonts/**"/>
 	
     <!-- view resolver -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -41,6 +42,17 @@
     	<property name="Prefix" value="/WEB-INF/jsp/"/>
     	<property name="suffix" value=".jsp"/>
     </bean>
+  	
+  	<mvc:interceptors>
+	  <mvc:interceptor>
+	    <mvc:mapping path="/api/**"/>
+	    <mvc:exclude-mapping path="/api/goLogin"/>
+	    <mvc:exclude-mapping path="/api/login"/>
+	    <mvc:exclude-mapping path="/api/user/userinfo"/>
+	    <mvc:exclude-mapping path="/api/touch/**"/>
+	    <bean class="com.hjq.interceptor.LoginInterceptor"/>
+	  </mvc:interceptor>
+	</mvc:interceptors>
     
     <!-- json view -->
     <bean id="defaultJsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
@@ -57,8 +69,21 @@
 	<bean id="jacksonSerializationConfig" factory-bean="mapper" factory-method="getSerializationConfig" class="org.codehaus.jackson.map.SerializationConfig">
 		<property name="dateFormat" ref="dateFormat"/>
 	</bean>
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetMethod" value="setSerializationInclusion"/>
+		<property name="targetObject" ref="jacksonSerializationConfig"/>
+		<property name="arguments">
+			<list>
+				<value type="org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion">NON_NULL</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- Bean Mapper -->
 	<bean id="dozerBeanMapper" class="org.dozer.DozerBeanMapper">
 		<!-- <property name="mappingFiles" value="api-model-mapper.xml" /> -->
+		<property name="mappingFiles" value="form-entity-mapper.xml" />
 	</bean>
+
+	<bean id="config" class="com.hjq.config.Configuration"/>
 </beans>

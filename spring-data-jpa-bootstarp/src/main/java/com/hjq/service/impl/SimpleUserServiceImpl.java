@@ -2,11 +2,12 @@ package com.hjq.service.impl;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,7 @@ public class SimpleUserServiceImpl implements SimpleUserService {
 
 	private final static Logger logger = LoggerFactory.getLogger(SimpleUserServiceImpl.class);
 
-	@Autowired private SimpleUserRepository simpleUserRepository;
+	@Inject private SimpleUserRepository simpleUserRepository;
 
 	@Transactional(rollbackFor=Exception.class)
 	public User create(User entity) {
@@ -90,6 +91,12 @@ public class SimpleUserServiceImpl implements SimpleUserService {
 	public long count(User entity) {
 
 		return simpleUserRepository.getUserCountByUserName(entity.getUserName());
+	}
+
+	@Override
+	public User findByUsernameAndPassword(String username, String password) {
+
+		return simpleUserRepository.findByUserNameAndPassword(username, password);
 	}
 
 }
